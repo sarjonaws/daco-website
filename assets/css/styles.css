@@ -1,0 +1,844 @@
+/* ==========================================================================
+   Daco Technologies — sitio web (tema oscuro)
+   Basado en "Daco Technologies - Website v3 Dark"
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Superficies */
+  --bg:               oklch(0.17 0.012 70);
+  --bg-translucent:   oklch(0.17 0.012 70 / 0.82);
+  --surface:          oklch(0.215 0.013 70 / 0.72);
+  --surface-cta:      oklch(0.24 0.035 265);
+
+  /* Bordes */
+  --border:           oklch(0.95 0.008 78 / 0.11);
+  --border-strong:    oklch(0.95 0.008 78 / 0.22);
+  --border-ghost:     oklch(0.95 0.008 78 / 0.24);
+  --border-ghost-hi:  oklch(0.95 0.008 78 / 0.45);
+
+  /* Texto */
+  --text:             oklch(0.94 0.008 78);
+  --text-soft:        oklch(0.76 0.012 78);
+  --text-muted:       oklch(0.74 0.012 78);
+  --text-dim:         oklch(0.71 0.012 78);
+  --text-faint:       oklch(0.69 0.012 78);
+  --text-fainter:     oklch(0.65 0.012 78);
+  --text-ghost:       oklch(0.63 0.012 78);
+  --text-on-accent:   oklch(0.15 0.012 70);
+  --text-on-paper:    oklch(0.18 0.012 70);
+  --text-on-cta:      oklch(0.8 0.012 78);
+
+  /* Marca */
+  --accent:           oklch(0.7 0.15 205);
+  --accent-hi:        oklch(0.78 0.14 205);
+  --accent-link-hi:   oklch(0.84 0.1 205);
+  --violet:           oklch(0.6 0.15 285);
+  --steel:            oklch(0.55 0.12 250);
+  --paper:            oklch(0.95 0.008 78);
+  --chalk:            oklch(0.99 0.004 78);
+
+  --iso-circle: linear-gradient(160deg, oklch(0.5 0.09 190), oklch(0.42 0.08 195));
+  --iso-square: linear-gradient(150deg, oklch(0.55 0.13 285 / 0.9), oklch(0.4 0.12 290 / 0.94));
+
+  /* Sombras */
+  --shadow-card:      0 14px 34px oklch(0 0 0 / 0.45);
+  --shadow-lift:      0 12px 30px oklch(0 0 0 / 0.3);
+
+  /* Tipografía */
+  --font-sans:  'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-mono:  'IBM Plex Mono', ui-monospace, 'SFMono-Regular', 'Consolas', monospace;
+  --font-brand: 'Poppins', var(--font-sans);
+
+  /* Ritmo */
+  --gutter:     clamp(16px, 4vw, 40px);
+  --measure:    1080px;
+  --section-gap: clamp(60px, 10vw, 110px);
+  --ease:       cubic-bezier(0.22, 0.8, 0.3, 1);
+
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, p, figure, blockquote { margin: 0; }
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--accent-link-hi);
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  z-index: 100;
+  transform: translate(-50%, -160%);
+  background: var(--accent);
+  color: var(--text-on-accent);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 8px;
+  transition: transform 0.2s var(--ease);
+}
+
+.skip-link:focus-visible { transform: translate(-50%, 0); }
+
+/* --------------------------------------------------------------------------
+   3. Fondo animado
+   -------------------------------------------------------------------------- */
+
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg__blob {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform, opacity;
+}
+
+.bg__blob--1 {
+  top: -14%;
+  left: 4%;
+  width: 42vw;
+  height: 42vw;
+  background: oklch(0.6 0.15 210);
+  opacity: 0.5;
+  filter: blur(130px);
+  animation: daco-breathe 18s ease-in-out infinite;
+}
+
+.bg__blob--2 {
+  top: 8%;
+  right: 0;
+  width: 36vw;
+  height: 36vw;
+  background: oklch(0.5 0.15 290);
+  opacity: 0.5;
+  filter: blur(140px);
+  animation: daco-breathe-2 24s ease-in-out infinite;
+}
+
+.bg__blob--3 {
+  bottom: -18%;
+  left: 28%;
+  width: 40vw;
+  height: 40vw;
+  background: oklch(0.52 0.13 250);
+  opacity: 0.38;
+  filter: blur(150px);
+  animation: daco-breathe 30s ease-in-out infinite;
+}
+
+.bg__glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 520px;
+  height: 520px;
+  margin-left: -260px;
+  margin-top: -260px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(circle, oklch(0.7 0.11 205 / 0.3), oklch(0.7 0.11 205 / 0.1) 45%, transparent 70%);
+  filter: blur(30px);
+  will-change: transform;
+}
+
+.bg__ripples {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid oklch(0.55 0.12 210 / 0.5);
+  animation: daco-ripple var(--ripple-duration, 1.6s) cubic-bezier(0.16, 0.7, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes daco-breathe {
+  0%, 100% { transform: translate(0, 0) scale(1);       opacity: 0.5; }
+  50%      { transform: translate(4%, -3%) scale(1.1);  opacity: 0.75; }
+}
+
+@keyframes daco-breathe-2 {
+  0%, 100% { transform: translate(0, 0) scale(1);       opacity: 0.45; }
+  50%      { transform: translate(-5%, 4%) scale(1.08); opacity: 0.65; }
+}
+
+@keyframes daco-ripple {
+  0%   { transform: translate(-50%, -50%) scale(0.15); opacity: 0.55; }
+  100% { transform: translate(-50%, -50%) scale(1);    opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   4. Layout
+   -------------------------------------------------------------------------- */
+
+.page {
+  position: relative;
+  z-index: 1;
+}
+
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.section {
+  padding: clamp(64px, 12vw, 120px) var(--gutter) clamp(56px, 9vw, 96px);
+  scroll-margin-top: 84px;
+}
+
+.section--flush {
+  padding-top: 0;
+  padding-bottom: var(--section-gap);
+}
+
+.section--cta { padding-bottom: clamp(52px, 8vw, 90px); }
+
+/* En pantallas angostas la barra se parte en dos filas y crece de alto. */
+@media (max-width: 640px) {
+  .section { scroll-margin-top: 120px; }
+}
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: clamp(28px, 5vw, 56px) clamp(22px, 4.4vw, 48px);
+}
+
+/* --------------------------------------------------------------------------
+   5. Tipografía compartida
+   -------------------------------------------------------------------------- */
+
+.eyebrow {
+  font-size: 13px;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+
+.eyebrow--tight {
+  color: var(--text-fainter);
+  margin-bottom: 14px;
+}
+
+.h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(26px, 4.4vw, 38px);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  margin: 0 0 12px;
+}
+
+.h2--sm {
+  font-size: clamp(24px, 4vw, 34px);
+  margin-bottom: 40px;
+}
+
+.section__lead {
+  font-size: 16px;
+  color: var(--text-dim);
+  margin-bottom: 44px;
+  max-width: 520px;
+}
+
+/* --------------------------------------------------------------------------
+   6. Isotipo
+   -------------------------------------------------------------------------- */
+
+.isotype {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+}
+
+.isotype__circle,
+.isotype__square {
+  width: var(--iso-size);
+  aspect-ratio: 1;
+  flex: none;
+  box-shadow: 0 0 0 var(--iso-ring) var(--chalk);
+}
+
+.isotype__circle {
+  border-radius: 50%;
+  background: var(--iso-circle);
+}
+
+.isotype__square {
+  position: relative;
+  border-radius: var(--iso-radius);
+  background: var(--iso-square);
+  margin-left: var(--iso-overlap);
+}
+
+.isotype--nav {
+  --iso-size: 20px;
+  --iso-ring: 1.5px;
+  --iso-radius: 5px;
+  --iso-overlap: -11px;
+}
+
+.isotype--hero {
+  --iso-size: clamp(136px, 17.7vw, 197px);
+  --iso-ring: 7px;
+  --iso-radius: 15%;
+  --iso-overlap: calc(var(--iso-size) * -0.53);
+}
+
+.isotype--story {
+  --iso-size: clamp(92px, 24vw, 132px);
+  --iso-ring: 6px;
+  --iso-radius: 21%;
+  --iso-overlap: calc(var(--iso-size) * -0.53);
+}
+
+/* --------------------------------------------------------------------------
+   7. Botones
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 14px 26px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.18s, box-shadow 0.25s;
+}
+
+.btn--sm {
+  font-size: 13px;
+  padding: 9px 18px;
+  border-radius: 7px;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: var(--text-on-accent);
+}
+
+.btn--primary:hover {
+  background: var(--accent-hi);
+  color: var(--text-on-accent);
+}
+
+.btn--primary:active { transform: scale(0.97); }
+
+.btn--ghost {
+  border-color: var(--border-ghost);
+  color: var(--text);
+}
+
+.btn--ghost:hover {
+  background: oklch(0.95 0.008 78 / 0.08);
+  border-color: var(--border-ghost-hi);
+  color: var(--text);
+}
+
+.btn--ghost:active { transform: scale(0.97); }
+
+.btn--paper {
+  background: var(--paper);
+  color: var(--text-on-paper);
+  font-weight: 600;
+  padding: 15px 30px;
+}
+
+.btn--paper:hover {
+  color: var(--text-on-paper);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+}
+
+.btn--paper:active { transform: translateY(0) scale(0.97); }
+
+/* --------------------------------------------------------------------------
+   8. Navegación
+   -------------------------------------------------------------------------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px var(--gutter);
+  background: var(--bg-translucent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid oklch(0.95 0.008 78 / 0.1);
+}
+
+.nav__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+}
+
+.nav__brand:hover { color: var(--text); }
+
+.nav__wordmark {
+  font-family: var(--font-brand);
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+
+.nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(14px, 3vw, 32px);
+  font-size: 14px;
+}
+
+.nav__links a {
+  color: var(--text-muted);
+  transition: color 0.2s;
+}
+
+.nav__links a:hover { color: var(--text); }
+
+/* --------------------------------------------------------------------------
+   9. Hero
+   -------------------------------------------------------------------------- */
+
+.hero { position: relative; }
+
+.hero__inner {
+  position: relative;
+  max-width: var(--measure);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(40px, 7vw, 80px);
+  align-items: center;
+}
+
+.hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 26px;
+}
+
+.hero__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(34px, 6vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  text-wrap: pretty;
+}
+
+.hero__lead {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--text-soft);
+  max-width: 460px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.hero__mark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   10. Clientes
+   -------------------------------------------------------------------------- */
+
+.trust__inner {
+  max-width: var(--measure);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(20px, 4vw, 56px);
+}
+
+.trust__label {
+  font-size: 12px;
+  color: var(--text-fainter);
+}
+
+.trust__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(20px, 4vw, 56px);
+}
+
+.trust__list li {
+  font-size: 15px;
+  font-weight: 500;
+  color: oklch(0.67 0.012 78);
+}
+
+/* --------------------------------------------------------------------------
+   11. Servicios
+   -------------------------------------------------------------------------- */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 30px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--border-strong);
+}
+
+.card__glyph {
+  width: 30px;
+  height: 30px;
+  flex: none;
+}
+
+.card__glyph--circle {
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.card__glyph--square {
+  border-radius: 8px;
+  background: var(--violet);
+}
+
+.card__title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.card__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+/* --------------------------------------------------------------------------
+   12. Proceso
+   -------------------------------------------------------------------------- */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 32px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 2px solid var(--accent);
+}
+
+.step__num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-ghost);
+  letter-spacing: 0.08em;
+}
+
+.step__title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.step__desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-dim);
+}
+
+/* --------------------------------------------------------------------------
+   13. Historia del isotipo
+   -------------------------------------------------------------------------- */
+
+.story {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(32px, 6vw, 64px);
+  align-items: center;
+}
+
+.story__figure {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.story__lead {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-soft);
+  margin-bottom: 28px;
+  max-width: 520px;
+}
+
+.traits {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 520px;
+}
+
+.trait {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.trait p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-soft);
+}
+
+.trait strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.trait__bullet {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+}
+
+.trait__bullet--circle { border-radius: 50%; background: var(--accent); }
+.trait__bullet--square { border-radius: 4px;  background: var(--violet); }
+
+.trait__bullet--blend {
+  border-radius: 50% 4px 4px 50%;
+  background: linear-gradient(90deg, var(--accent), var(--violet));
+}
+
+.trait__bullet--cross {
+  border-radius: 50% 4px 4px 50%;
+  background: var(--steel);
+}
+
+/* --------------------------------------------------------------------------
+   14. Testimonio
+   -------------------------------------------------------------------------- */
+
+.quote__inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.quote__text {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(21px, 3.6vw, 32px);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  margin-bottom: 20px;
+  text-wrap: pretty;
+}
+
+.quote__author {
+  font-size: 14px;
+  color: var(--text-faint);
+}
+
+/* --------------------------------------------------------------------------
+   15. CTA
+   -------------------------------------------------------------------------- */
+
+.cta {
+  max-width: var(--measure);
+  margin: 0 auto;
+  background: var(--surface-cta);
+  color: var(--paper);
+  border-radius: 18px;
+  padding: clamp(36px, 6vw, 72px) clamp(24px, 5vw, 56px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.cta__copy { max-width: 520px; }
+
+.cta__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(26px, 4.6vw, 40px);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  margin-bottom: 14px;
+}
+
+.cta__desc {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-on-cta);
+}
+
+/* --------------------------------------------------------------------------
+   16. Footer
+   -------------------------------------------------------------------------- */
+
+.footer {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 32px var(--gutter) 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.footer__brand {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.footer__legal {
+  font-size: 13px;
+  color: var(--text-ghost);
+}
+
+/* --------------------------------------------------------------------------
+   17. Reveal al hacer scroll
+   -------------------------------------------------------------------------- */
+
+.js .reveal { opacity: 0; }
+
+.js .reveal.is-visible {
+  animation: daco-reveal 0.65s var(--ease) var(--reveal-delay, 0ms) both;
+}
+
+/* Al terminar, se libera el transform para no bloquear los estados :hover. */
+.js .reveal.is-revealed {
+  opacity: 1;
+  animation: none;
+}
+
+@keyframes daco-reveal {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   18. Preferencias de movimiento
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .js .reveal { opacity: 1; }
+  .bg__blob { animation: none; }
+}

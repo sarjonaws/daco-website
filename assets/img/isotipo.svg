@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" role="img" aria-label="Isotipo de Daco Technologies">
+  <title>Daco Technologies</title>
+  <defs>
+    <linearGradient id="daco-circle" x1="0" y1="0" x2="0.55" y2="1">
+      <stop offset="0" stop-color="#00717a"/>
+      <stop offset="1" stop-color="#005a66"/>
+    </linearGradient>
+    <linearGradient id="daco-square" x1="0" y1="0" x2="0.62" y2="1">
+      <stop offset="0" stop-color="#695ac8"/>
+      <stop offset="1" stop-color="#4a3a9e"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="69" cy="70" r="63" fill="url(#daco-circle)" stroke="#fcfbf9" stroke-width="6"/>
+  <rect x="68" y="7" width="126" height="126" rx="27" fill="url(#daco-square)" stroke="#fcfbf9" stroke-width="6"/>
+</svg>
